@@ -9,7 +9,8 @@ class App extends Component {
 			{ name: 'vishesh', age: 21 },
 			{ name: 'ashish', age: 22 },
 			{ name: 'nikhil', age: 23 },
-		]
+		],
+		showPersons: false
 	}
 	
 	switchNameHandler = (newName) => {
@@ -42,6 +43,15 @@ class App extends Component {
 		})
 	}
 
+	togglePersonsHandler = () => {
+		const doesShow = this.state.showPersons;
+		this.setState({showPersons: !doesShow});
+	}
+
+	deletePersonHandler = () => {
+		
+	}
+
 	render() {
 
 		const style = {
@@ -52,29 +62,30 @@ class App extends Component {
 			cursor: 'pointer'
 		};
 
+		let persons = null;
+
+		if(this.state.showPersons){
+			persons = (
+				<div>
+					{this.state.persons.map(person => {
+						return <Person 
+						name={person.name}
+						age={person.age} />
+					})}
+				</div>
+			);
+		}
+
 		return (
 			<div className="App">
 				<header className="App-header">
 	
 					<h1>Hello, React world</h1>
 					<button 
-						onClick={ this.switchNameHandler.bind(this, 'Vishesh Pandita') }
+						onClick={ this.togglePersonsHandler } 
 						style={style} >Switch Name</button>
 	
-					<Person 
-						name={this.state.persons[0].name} 
-						age={this.state.persons[0].age} 
-						click={() => this.switchNameHandler('Vishesh Pandit')} >Table Tennis</Person>
-	
-					<Person 
-						name={this.state.persons[1].name} 
-						age={this.state.persons[1].age}
-						click = {this.upppercaseNameHandler} >Table Tennis</Person>
-	
-					<Person 
-						name={this.state.persons[2].name} 
-						age={this.state.persons[2].age}
-						changed={this.nameChangedHandler} >Table Tennis</Person>
+					{persons}
 	
 				</header>
 			</div>
